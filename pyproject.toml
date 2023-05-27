@@ -2,7 +2,7 @@
 name = "pet-proj1"
 version = "0.1.0"
 description = ""
-authors = ["Vladislav Smuglienko <vladislav.smuglienko@t-systems.com>"]
+authors = ["Vladislav Smuglienko <smuglik26@yandex.ru>"]
 readme = "README.md"
 packages = [{include = "pet_proj1"}]
 
@@ -11,7 +11,51 @@ python = "^3.11"
 fastapi = "^0.95.2"
 uvicorn = "^0.22.0"
 pydantic = {extras = ["dotenv", "email"], version = "^1.10.8"}
+loguru = "^0.7.0"
+sqlalchemy = "^2.0.15"
+alembic = "^1.11.1"
+psycopg = {extras = ["binary"], version = "^3.1.9"}
 
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.0.270"
+
+[tool.ruff]
+select = [
+    "E", # pycodestyle errors
+    "W", # pycodestyle warnings
+    "F", # pyflakes
+    "I", # isort
+    "ANN", # flake8-annotations
+    "S", # flake8-bandit
+    "A", # flake8-builtins
+    "COM", # flake8-commas
+    "C4", # flake8-comprehensions
+    "DTZ", # flake8-datetimez
+    "PIE", # flake8-pie
+    "T20", # flake8-print
+    "PT", # flake8-pytest-style
+    "ARG", # flake8-unused-arguments
+    "PTH", # flake8-use-pathlib
+]
+exclude = [
+    ".venv/",
+    "venv/",
+]
+ignore = [
+    "S101",
+    "ANN101",
+    "ANN102"
+]
+line-length = 120
+src = ["."]
+target-version = "py311"
+
+[tool.ruff.isort]
+lines-after-imports = 1
+force-wrap-aliases = true
+combine-as-imports = true
+force-sort-within-sections = true
+known-third-party = ["fastapi", "pydantic", "starlette"]
 
 [build-system]
 requires = ["poetry-core"]
