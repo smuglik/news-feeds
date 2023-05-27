@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "pet-proj1"
+version = "0.1.0"
+description = ""
+authors = ["Vladislav Smuglienko <vladislav.smuglienko@t-systems.com>"]
+readme = "README.md"
+packages = [{include = "pet_proj1"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.95.2"
+uvicorn = "^0.22.0"
+pydantic = {extras = ["dotenv", "email"], version = "^1.10.8"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
