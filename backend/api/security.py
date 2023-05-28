@@ -31,7 +31,11 @@ async def login(
     if not user.password == credentials.password.get_secret_value():
         raise credentials_validation_exception
     t = generate_token()
-    await redis_session.set(name=t, value=user.email)
+    await redis_session.set(
+        name=t,
+        value=user.email,
+        ex=3600
+        )
     return t
 
 

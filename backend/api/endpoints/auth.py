@@ -38,9 +38,7 @@ async def authenticate_user(
         redis_session: Redis = Depends(get_redis_session),
         ) -> dict[str, str]:
     token = await login(cred, db_session, redis_session)
-    return {
-        "token": token,
-        }
+    return {"token": token}
 
 
 @routes.post("/logout/")
@@ -49,6 +47,4 @@ async def logout_user(
         redis_session: Redis = Depends(get_redis_session),
         ) -> Response:
     await logout(redis_session, token)
-    return Response(
-        status_code=204,
-        )
+    return Response(status_code=204)

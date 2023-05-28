@@ -2,7 +2,7 @@ services:
   database:
     image: postgres:15
     env_file:
-      - .env
+      - backend/.env
     ports:
       - ${postgres_port}:5432
     environment:
@@ -14,7 +14,7 @@ services:
   redis:
     image: redis:7
     env_file:
-      - .env
+      - backend/.env
     ports:
       - ${REDIS_PORT}:6379
     environment:

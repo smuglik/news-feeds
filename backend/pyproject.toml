@@ -4,20 +4,26 @@ version = "0.1.0"
 description = ""
 authors = ["Vladislav Smuglienko <smuglik26@yandex.ru>"]
 readme = "README.md"
-packages = [{include = "pet_proj1"}]
+packages = [{ include = "pet_proj1" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
 fastapi = "^0.95.2"
 uvicorn = "^0.22.0"
-pydantic = {extras = ["dotenv", "email"], version = "^1.10.8"}
+pydantic = { extras = ["dotenv", "email"], version = "^1.10.8" }
 loguru = "^0.7.0"
 sqlalchemy = "^2.0.15"
 alembic = "^1.11.1"
-psycopg = {extras = ["binary"], version = "^3.1.9"}
+psycopg = { extras = ["binary"], version = "^3.1.9" }
+redis = {extras = ["hiredis"], version = "^4.5.5"}
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.0.270"
+
+
+[tool.poetry.group.generator.dependencies]
+mimesis = "^10.1.0"
 
 [tool.ruff]
 select = [

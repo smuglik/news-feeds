@@ -1,10 +1,11 @@
-from datetime import UTC, datetime
 import uuid
+from datetime import UTC, datetime
 
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database.base import Base
+
 
 class User(Base):
     __tablename__ = "user"  # noqa
@@ -17,6 +18,7 @@ class User(Base):
     password: Mapped[str] = mapped_column(nullable=False)
 
     posts: Mapped[list["Post"]] = relationship(back_populates="author")
+
     def __repr__(self) -> str:
         return self.username
 
@@ -27,8 +29,16 @@ class Post(Base):
     id: Mapped[int] = mapped_column(primary_key=True)  # noqa
     title: Mapped[str] = mapped_column(nullable=False)
     body: Mapped[str] = mapped_column(nullable=False)
-    author_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
     author: Mapped["User"] = relationship(back_populates="posts")
+    author_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
+    #TODO add created field
+    created: Mapped[datetime] = mapped_column(default=datetime.now(tz=UTC))
 
 
-created: Mapped[datetime] = mapped_column(default=datetime.now(tz=UTC))
+class Product(Base):
+    __tablename__ = "product"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(nullable=False)
+    description: Mapped[str] = mapped_column(nullable=False)
+    cost: Mapped[float] = mapped_column(nullable=False)

@@ -1,5 +1,8 @@
 .venv/
 venv/
+.vscode/
+.ruff_cache/
 .idea/
 *//__pycache__/
-.env/
+backend/.env/
+frontend/node_modules/

@@ -11,6 +11,7 @@ oauth2_scheme = OAuth2PasswordBearer(
     tokenUrl="token",
     )
 
+
 async def get_db_session() -> AsyncSession:
     async with SessionLocal() as session:
         yield session
@@ -25,7 +26,13 @@ async def get_user_email(
         token: str = Depends(oauth2_scheme),
         redis_db: Redis = Depends(get_redis_session),
         ) -> EmailStr:
-    key = await redis_db.get(token)
-    if not key:
+    """
+    Return user email related to auth token
+    :param token: Dependency return Bearer token
+    :param redis_db: dependency return redis session
+    :return:
+    """
+    user = await redis_db.get(token)
+    if not user:
         raise token_validation_exception
-    return key
+    return user
