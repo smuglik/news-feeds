@@ -1,16 +1,19 @@
 from fastapi import FastAPI
-from loguru import logger
-import uvicorn
 
+from api.routes import routes
 from settings.base import get_config
 
 conf = get_config()
 
-app = FastAPI(title=conf.app_name)
 
-if __name__ == '__main__':
-    logger.info("Starting of Application")
-    uvicorn.run(
-        app=app,
-        port=conf.port,
-    )
+def create_app() -> FastAPI:
+
+    app = FastAPI(
+        title=conf.app_name,
+        )
+    app.include_router(routes)
+    return app
+
+
+app = create_app()
+
