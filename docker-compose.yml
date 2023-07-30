@@ -4,7 +4,7 @@ services:
     env_file:
       - .env
     ports:
-      - ${postgres_port}:5432
+      - ${POSTGRES_PORT}:5432
   redis:
     image: redis:7
     env_file:
