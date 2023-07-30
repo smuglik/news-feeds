@@ -1,8 +1,9 @@
-.venv/
-venv/
+backend/.venv/
+backend/venv/
 .vscode/
 .ruff_cache/
 .idea/
+__pycache__/
 *//__pycache__/
-backend/.env/
+.env/
 frontend/node_modules/

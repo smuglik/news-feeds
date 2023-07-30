@@ -31,7 +31,6 @@ class Post(Base):
     body: Mapped[str] = mapped_column(nullable=False)
     author: Mapped["User"] = relationship(back_populates="posts")
     author_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
-    #TODO add created field
     created: Mapped[datetime] = mapped_column(default=datetime.now(tz=UTC))
 
 
