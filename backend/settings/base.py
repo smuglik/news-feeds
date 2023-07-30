@@ -7,22 +7,22 @@ class Settings(BaseSettings):
     port: int = 3456
     app_name = "News portal"
 
-    pg_port: int = Field(env='postgres_port')
-    pg_host: str = Field(env='postgres_host')
-    pg_user: str = Field(env='postgres_user')
-    pg_password: SecretStr = Field(env='postgres_password')
-    pg_db: str = Field(env='postgres_db')
-    pg_schema: str = Field(env='postgres_schema')
+    pg_port: int = Field(env='POSTGRES_PORT')
+    pg_host: str = Field(env='POSTGRES_HOST')
+    pg_user: str = Field(env='POSTGRES_USER')
+    pg_password: SecretStr = Field(env='POSTGRES_PASSWORD')
+    pg_db: str = Field(env='POSTGRES_DB')
+    pg_schema: str = Field(env='POSTGRES_SCHEMA')
 
-    redis_port: int = Field(env='redis_port')
-    redis_host: str = Field(env='redis_host')
-    redis_user: str = Field(env='redis_user')
-    redis_password: SecretStr = Field(env='redis_password')
+    redis_port: int = Field(env='REDIS_PORT')
+    redis_host: str = Field(env='REDIS_HOST')
+    redis_user: str = Field(env='REDIS_USER')
+    redis_password: SecretStr = Field(env='REDIS_PASSWORD')
 
     auth_token_length: int = 40
 
     class Config:
-        env_file = '.env'
+        env_file = '../.env'
         env_file_encoding = 'utf-8'
 
 

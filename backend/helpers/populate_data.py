@@ -1,4 +1,5 @@
 import asyncio
+import sys
 
 from mimesis import Schema, Field
 from mimesis.locales import Locale
@@ -28,5 +29,6 @@ async def main() -> None:
 
 
 if __name__ == '__main__':
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    if sys.platform == "win32":
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     asyncio.run(main())

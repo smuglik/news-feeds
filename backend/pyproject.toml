@@ -4,7 +4,6 @@ version = "0.1.0"
 description = ""
 authors = ["Vladislav Smuglienko <smuglik26@yandex.ru>"]
 readme = "README.md"
-packages = [{ include = "pet_proj1" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
