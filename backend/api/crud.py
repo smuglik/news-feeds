@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from api.schemas import PostIn, PostOut, UserIn, Product as ProductSchema
 from database.models import Post, User, Product
+from database.sessions import redis_connection
 
 
 async def create_user_in_db(
@@ -59,5 +60,13 @@ async def get_products(session: AsyncSession) -> list[Product]:
     :return:
     """
     products = await session.scalars(select(Product))
-    p = [ProductSchema.from_orm(item) for item in products]
-    return p
+    res = []
+
+    for product in products:
+        async with redis_connection as conn:
+            image = await conn.get(product.image_id)
+            t = ProductSchema.from_orm(product)
+            t.image = image
+            res.append(t)
+
+    return res

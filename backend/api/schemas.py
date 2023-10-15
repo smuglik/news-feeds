@@ -64,6 +64,7 @@ class Product(BaseModel):
     name: str
     description: str
     cost: float
+    image: bytes | None
 
     class Config:
         orm_mode = True

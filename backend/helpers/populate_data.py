@@ -5,7 +5,7 @@ from mimesis import Schema, Field
 from mimesis.locales import Locale
 
 from database.models import Product
-from database.sessions import SessionLocal
+from database.sessions import SessionLocal, redis_connection
 
 
 async def main() -> None:
@@ -18,14 +18,29 @@ async def main() -> None:
         schema=lambda: {
             "name": f("finance.company"),
             "description": f("text.text", quantity=10),
-            "cost": f("finance.price", minimum=10, maximum=3000)
+            "cost": f("finance.price", minimum=10, maximum=3000),
+            "image": {
+                "id": f("uuid"),
+                "data": f("image", )
+            }
         },
         iterations=20
     )
     data = schema.create()
     async with SessionLocal() as session:
-        session.add_all([Product(**item) for item in data])
+        session.add_all([Product(
+            name=item["name"],
+            description=item["description"],
+            cost=item["cost"],
+            image_id=item["image"]["id"]
+        ) for item in data])
         await session.commit()
+    async with redis_connection as conn:
+        for record in data:
+            await conn.set(
+                name=record["image"]["id"],
+                value=record["image"]["data"],
+            )
 
 
 if __name__ == '__main__':

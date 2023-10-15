@@ -41,3 +41,4 @@ class Product(Base):
     name: Mapped[str] = mapped_column(nullable=False)
     description: Mapped[str] = mapped_column(nullable=False)
     cost: Mapped[float] = mapped_column(nullable=False)
+    image_id: Mapped[str] = mapped_column(nullable=False)
