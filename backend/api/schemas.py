@@ -1,6 +1,6 @@
 import uuid
 
-from pydantic import BaseModel, EmailStr, SecretStr, validator
+from pydantic import BaseModel, EmailStr, SecretStr, field_validator
 
 from database.models import User
 
@@ -10,7 +10,7 @@ class __BasePost(BaseModel):
     body: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class PostIn(__BasePost):
@@ -23,7 +23,7 @@ class PostOut(__BasePost):
 
     # created: datetime.datetime
 
-    @validator('author', pre=True)
+    @field_validator('author')
     def take_user_name(cls, value: User) -> str:
         return f"{value.first_name.title()} {value.last_name.title()}<{value.email}>"
 
@@ -35,13 +35,13 @@ class __BaseUser(BaseModel):
     is_superuser: bool
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class UserIn(__BaseUser):
     password: str
 
-    @validator("password", pre=True)
+    @field_validator("password")
     def check_password_weakness(cls, values: dict) -> dict:
         return values
 
@@ -49,7 +49,7 @@ class UserIn(__BaseUser):
 class UserOut(__BaseUser):
     id: str  # noqa
 
-    @validator("id", pre=True)
+    @field_validator("id")
     def uuid2str(cls, value: uuid.UUID) -> str:
         return str(value)
 
@@ -67,4 +67,4 @@ class Product(BaseModel):
     image: bytes | None
 
     class Config:
-        orm_mode = True
+        from_attributes = True

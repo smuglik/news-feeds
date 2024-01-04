@@ -6,11 +6,11 @@ from settings.base import get_config
 conf = get_config()
 
 POSTGRES_URL = "postgresql+psycopg://{user}:{password}@{host}:{port}/{db_name}".format(
-    user=conf.pg_user,
-    password=conf.pg_password.get_secret_value(),
-    host=conf.pg_host,
-    port=conf.pg_port,
-    db_name=conf.pg_db,
+    user=conf.postgres_user,
+    password=conf.postgres_password.get_secret_value(),
+    host=conf.postgres_host,
+    port=conf.postgres_port,
+    db_name=conf.postgres_db,
 )
 
 engine = create_async_engine(POSTGRES_URL, pool_pre_ping=True, echo=True)
