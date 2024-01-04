@@ -1,11 +1,13 @@
 import functools
 
-from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import Field, SecretStr
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file='.env', env_file_encoding='utf-8')
+
+    debug: bool = Field(default=False)
     port: int = 3456
     app_name: str = "News portal"
 
