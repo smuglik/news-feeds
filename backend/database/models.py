@@ -1,7 +1,7 @@
 import uuid
-from datetime import UTC, datetime
+from datetime import datetime
 
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database.base import Base
@@ -31,14 +31,4 @@ class Post(Base):
     body: Mapped[str] = mapped_column(nullable=False)
     author: Mapped["User"] = relationship(back_populates="posts")
     author_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
-    created: Mapped[datetime] = mapped_column(default=datetime.now(tz=UTC))
-
-
-class Product(Base):
-    __tablename__ = "product"
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(nullable=False)
-    description: Mapped[str] = mapped_column(nullable=False)
-    cost: Mapped[float] = mapped_column(nullable=False)
-    image_id: Mapped[str] = mapped_column(nullable=False)
+    created: Mapped[datetime] = mapped_column(server_default=func.now())
