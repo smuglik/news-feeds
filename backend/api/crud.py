@@ -2,9 +2,8 @@ from pydantic import EmailStr
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from api.schemas import PostIn, PostOut, UserIn, Product as ProductSchema
-from database.models import Post, User, Product
-from database.sessions import redis_connection
+from api.schemas import PostIn, PostOut, UserIn
+from database.models import Post, User
 
 
 async def create_user_in_db(
@@ -12,7 +11,7 @@ async def create_user_in_db(
         session: AsyncSession,
 ) -> User:
     db_user = User(
-        **user.dict(),
+        **user.model_dump(),
     )
     session.add(db_user)
     await session.commit()
@@ -36,37 +35,20 @@ async def create_post(
         session: AsyncSession
 ) -> PostOut:
     db_post = Post(
-        **post.dict(),
+        **post.model_dump(),
         author=user
     )
     session.add(db_post)
     await session.commit()
     await session.refresh(db_post)
-    return PostOut.from_orm(db_post)
+    return PostOut.model_validate(db_post, from_attributes=True)
 
 
 async def get_posts(
+        user: User,
         session: AsyncSession
 ):
-    posts = await session.scalars(
-        select(Post)
+    posts = await session.execute(
+        select(Post).where(Post.author_id == user.id)
     )
-
-
-async def get_products(session: AsyncSession) -> list[Product]:
-    """
-    Return hole list of Products
-    :param session:
-    :return:
-    """
-    products = await session.scalars(select(Product))
-    res = []
-
-    for product in products:
-        async with redis_connection as conn:
-            image = await conn.get(product.image_id)
-            t = ProductSchema.from_orm(product)
-            t.image = image
-            res.append(t)
-
-    return res
+    return posts

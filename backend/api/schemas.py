@@ -59,12 +59,3 @@ class Credentials(BaseModel):
     password: SecretStr
 
 
-class Product(BaseModel):
-    id: int
-    name: str
-    description: str
-    cost: float
-    image: bytes | None
-
-    class Config:
-        from_attributes = True

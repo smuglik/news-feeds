@@ -35,12 +35,6 @@ async def main() -> None:
             image_id=item["image"]["id"]
         ) for item in data])
         await session.commit()
-    async with redis_connection as conn:
-        for record in data:
-            await conn.set(
-                name=record["image"]["id"],
-                value=record["image"]["data"],
-            )
 
 
 if __name__ == '__main__':
