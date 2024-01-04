@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Response
-from structlog import get_logger
 from redis.asyncio import Redis
 from sqlalchemy.ext.asyncio import AsyncSession
+from structlog import get_logger
 
 from api.crud import create_user_in_db, find_user_by_email
 from api.dependencies import get_db_session, get_redis_session, get_user_email, oauth2_scheme

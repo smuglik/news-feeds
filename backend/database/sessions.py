@@ -13,7 +13,7 @@ POSTGRES_URL = "postgresql+psycopg://{user}:{password}@{host}:{port}/{db_name}".
     db_name=conf.postgres_db,
 )
 
-engine = create_async_engine(POSTGRES_URL, pool_pre_ping=True, echo=True)
+engine = create_async_engine(POSTGRES_URL, pool_pre_ping=True, echo=conf.debug)
 SessionLocal = async_sessionmaker(autocommit=False, autoflush=False, bind=engine, expire_on_commit=False)
 
 redis_connection = redis.Redis(

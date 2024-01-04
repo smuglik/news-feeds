@@ -9,7 +9,8 @@ conf = get_config()
 
 def create_app() -> FastAPI:
     app = FastAPI(
-        title=conf.app_name
+        title=conf.app_name,
+        debug=conf.debug
     )
     app.include_router(routes)
     app.add_middleware(GZipMiddleware, minimum_size=1000)

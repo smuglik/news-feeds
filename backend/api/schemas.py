@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime
 
 from pydantic import BaseModel, EmailStr, SecretStr, field_validator
 
@@ -20,10 +21,9 @@ class PostIn(__BasePost):
 class PostOut(__BasePost):
     id: int  # noqa
     author: str
+    created: datetime
 
-    # created: datetime.datetime
-
-    @field_validator('author')
+    @field_validator('author', mode="before")
     def take_user_name(cls, value: User) -> str:
         return f"{value.first_name.title()} {value.last_name.title()}<{value.email}>"
 
@@ -41,10 +41,6 @@ class __BaseUser(BaseModel):
 class UserIn(__BaseUser):
     password: str
 
-    @field_validator("password")
-    def check_password_weakness(cls, values: dict) -> dict:
-        return values
-
 
 class UserOut(__BaseUser):
     id: str  # noqa
@@ -57,5 +53,3 @@ class UserOut(__BaseUser):
 class Credentials(BaseModel):
     email: EmailStr
     password: SecretStr
-
-
