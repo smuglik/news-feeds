@@ -15,8 +15,9 @@ sqlalchemy = "^2.0.25"
 psycopg = { extras = ["binary"], version = "^3.1" }
 alembic = "^1.13"
 redis = {extras = ["hiredis"], version = "^5.0"}
-passlib = {extras = ["bcrypt"], version = "^1.7.4"}
 structlog = "^23.3.0"
+bcrypt = "^4.1.2"
+argon2-cffi = "^23.1.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.1"
@@ -24,6 +25,7 @@ ruff = "^0.1"
 
 [tool.poetry.group.generator.dependencies]
 mimesis = "^11.1"
+greenlet = "^3.0.3"
 
 [tool.ruff]
 select = [
