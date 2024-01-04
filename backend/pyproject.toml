@@ -7,22 +7,23 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-fastapi = "^0.95.2"
-uvicorn = "^0.22.0"
-pydantic = { extras = ["dotenv", "email"], version = "^1.10.8" }
-loguru = "^0.7.0"
-sqlalchemy = "^2.0.15"
-alembic = "^1.11.1"
-psycopg = { extras = ["binary"], version = "^3.1.9" }
-redis = {extras = ["hiredis"], version = "^4.5.5"}
+fastapi = "^0.108"
+uvicorn = "^0.25"
+pydantic = { extras = ["email"], version = "^2.5" }
+pydantic-settings = "^2.1.0"
+sqlalchemy = "^2.0.25"
+psycopg = { extras = ["binary"], version = "^3.1" }
+alembic = "^1.13"
+redis = {extras = ["hiredis"], version = "^5.0"}
 passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+structlog = "^23.3.0"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.0.270"
+ruff = "^0.1"
 
 
 [tool.poetry.group.generator.dependencies]
-mimesis = "^10.1.0"
+mimesis = "^11.1"
 
 [tool.ruff]
 select = [
