@@ -4,6 +4,7 @@ from fastapi.middleware.gzip import GZipMiddleware
 from api.routes import routes
 from settings.base import get_config
 
+
 conf = get_config()
 
 

@@ -9,6 +9,7 @@ from api.schemas import Credentials, UserIn, UserOut
 from api.security import login, logout
 from database.models import User
 
+
 routes = APIRouter()
 logger = get_logger()
 

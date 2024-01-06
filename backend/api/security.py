@@ -11,6 +11,7 @@ from api.exceptions import credentials_validation_exception
 from api.schemas import Credentials
 from settings.base import get_config
 
+
 conf = get_config()
 
 ph = PasswordHasher()
@@ -25,7 +26,7 @@ def get_hashed_password(password: str) -> str:
     return ph.hash(password)
 
 
-def verify_hashed_password(password: str, hashed_password) -> bool:
+def verify_password(password: str, hashed_password: str) -> bool:
     try:
         return ph.verify(hashed_password, password)
     except argon2.exceptions.VerifyMismatchError:
@@ -48,7 +49,7 @@ async def login(
         credentials.email,
         db_session,
     )
-    if not verify_hashed_password(credentials.password.get_secret_value(), user.password):
+    if not verify_password(credentials.password.get_secret_value(), user.password):
         raise credentials_validation_exception
     t = generate_token()
     await redis_session.set(

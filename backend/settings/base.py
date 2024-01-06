@@ -26,7 +26,6 @@ class Settings(BaseSettings):
     auth_token_length: int = 40
 
 
-
 @functools.lru_cache
 def get_config() -> Settings:
     return Settings()

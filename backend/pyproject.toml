@@ -52,14 +52,18 @@ exclude = [
 ignore = [
     "S101",
     "ANN101",
-    "ANN102"
+    "ANN102",
+    "COM812",
 ]
 line-length = 120
 src = ["."]
 target-version = "py311"
 
+[tool.ruff.format]
+quote-style = "double"
+
 [tool.ruff.isort]
-lines-after-imports = 1
+lines-after-imports = 2
 force-wrap-aliases = true
 combine-as-imports = true
 force-sort-within-sections = true

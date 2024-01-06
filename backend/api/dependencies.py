@@ -12,6 +12,7 @@ from api.exceptions import token_validation_exception
 from database.models import User
 from database.sessions import SessionLocal, redis_connection
 
+
 oauth2_scheme = OAuth2PasswordBearer(
     tokenUrl="token",
 )

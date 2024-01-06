@@ -3,6 +3,7 @@ from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
 from settings.base import get_config
 
+
 conf = get_config()
 
 POSTGRES_URL = "postgresql+psycopg://{user}:{password}@{host}:{port}/{db_name}".format(

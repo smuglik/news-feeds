@@ -1,7 +1,7 @@
 import asyncio
 import sys
 
-from mimesis import Schema, Field
+from mimesis import Field, Schema
 from mimesis.locales import Locale
 
 from api.security import get_hashed_password

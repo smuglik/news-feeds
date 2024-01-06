@@ -1,9 +1,7 @@
-import uuid
 from datetime import datetime
+import uuid
 
 from pydantic import BaseModel, EmailStr, SecretStr, field_validator
-
-from database.models import User
 
 
 class __BasePost(BaseModel):
@@ -22,10 +20,6 @@ class PostOut(__BasePost):
     id: int  # noqa
     author: str
     created: datetime
-
-    @field_validator('author', mode="before")
-    def take_user_name(cls, value: User) -> str:
-        return f"{value.first_name.title()} {value.last_name.title()}<{value.email}>"
 
 
 class __BaseUser(BaseModel):
