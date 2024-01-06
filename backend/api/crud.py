@@ -1,5 +1,5 @@
 from pydantic import EmailStr
-from sqlalchemy import select
+from sqlalchemy import func, label, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from api.schemas import PostIn, PostOut, UserIn
@@ -40,15 +40,37 @@ async def create_post(
     )
     session.add(db_post)
     await session.commit()
-    await session.refresh(db_post)
-    return PostOut.model_validate(db_post, from_attributes=True)
+    obj = await session.execute(
+        select(
+            Post.id,
+            Post.created,
+            Post.title,
+            Post.body,
+            label(
+                "author", func.concat(
+                    User.first_name, " ", User.last_name, "<", User.email, ">"
+                )
+            )
+        ).where(Post.id == db_post.id).join(User, Post.author_id == User.id)
+    )
+    return PostOut.model_validate(*obj.all())  # not quite safe
 
 
 async def get_posts(
         user: User,
         session: AsyncSession
-):
+) -> list[Post]:
     posts = await session.execute(
-        select(Post).where(Post.author_id == user.id)
+        select(
+            Post.id,
+            Post.created,
+            Post.title,
+            Post.body,
+            label(
+                "author", func.concat(
+                    User.first_name, " ", User.last_name, "<", User.email, ">"
+                )
+            )
+        ).where(Post.author_id == user.id).join(User, Post.author_id == User.id)
     )
-    return posts
+    return posts.fetchall()
