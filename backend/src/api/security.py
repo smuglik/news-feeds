@@ -5,7 +5,7 @@ from argon2 import PasswordHasher
 from redis.asyncio import Redis
 from sqlalchemy.ext.asyncio import AsyncSession
 from structlog import get_logger
-
+from fastapi import HTTPException, status
 from api.crud import find_user_by_email
 from api.exceptions import credentials_validation_exception
 from api.schemas import Credentials
@@ -49,6 +49,8 @@ async def login(
         credentials.email,
         db_session,
     )
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
     if not verify_password(credentials.password.get_secret_value(), user.password):
         raise credentials_validation_exception
     t = generate_token()
